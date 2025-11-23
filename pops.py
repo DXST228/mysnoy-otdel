@@ -13,13 +13,13 @@ class Pops:
         if self.answered < self.numbers:
             self.qs.remove(self.qs[self.now])
             self.now =randint(0,len(self.qs)-1)
-            self.answered+=1
-        else:
-            self.qs = self.initquestions
-            self.answered = 1
-            self.trueanswerd = 0   
+            self.answered+=1 
     def levelup(self):
         if self.trueanswerd < self.numbers:
             self.trueanswerd+=1
-        else:
-            self.trueanswerd =0
+    def end(self):
+        ress = str(self.trueanswerd) +'/'+str(self.numbers)
+        self.qs = self.initquestions
+        self.answered = 1
+        self.trueanswerd = 0 
+        return ress  

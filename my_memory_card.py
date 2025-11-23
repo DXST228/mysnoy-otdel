@@ -76,9 +76,9 @@ class MyWindow(QWidget):
     def click(self):
         if self.answer.text()== TOORES:
             self.show_result()
-            self.next_question()
+            
         else:
-            self.show_question()
+            self.next_question()
     def set_styles(self, ui_filename='style.qss', icon='IHV.png'):
         stream = QFile(ui_filename)
         stream.open(QIODevice.ReadOnly)
@@ -111,19 +111,27 @@ class MyWindow(QWidget):
             self.buttons[i+1].setText(q[WRONG][i])
         self.show_question()
     def chek_answer(self):
-        if self.buttons[0].isChecked():
-            self.isright.setText('True')
-            self.show_result()
+        if len(self.pops.qs)!=1:
+            if self.buttons[0].isChecked():
+                self.isright.setText('True')
+                self.pops.levelup()
+                self.click()
             #перейди к следующему вопросу пж
+            else:
+                for button in self.buttons[1:]:
+                    if button.isChecked():
+                        self.isright.setText('False')
+                        self.click()
         else:
-            for button in self.buttons[1:]:
-                if button.isChecked():
-                    self.isright.setText('False')
-                    self.show_result()
+            self.text1.setText('Тест закончен, '+ self.pops.end())
+            #self.answer.hide()
+            self.result.show()
+            self.qwestion.hide()
+            self.answer.setText(GUESS)
     def next_question(self):
         self.pops.next()
         queue = self.pops.qs[self.pops.now]
-        ask(queue)
+        self.ask(queue)
         #5Б отдай вопрос плз
 app = QApplication([])
 
